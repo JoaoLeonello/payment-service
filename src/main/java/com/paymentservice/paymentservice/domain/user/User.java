@@ -1,10 +1,8 @@
 package com.paymentservice.paymentservice.domain.user;
 
+import com.paymentservice.paymentservice.dtos.UserDTO;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.math.BigDecimal;
 
@@ -13,6 +11,7 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 @AllArgsConstructor
+@NoArgsConstructor
 @EqualsAndHashCode(of="id")
 public class User {
     @Id
@@ -29,8 +28,19 @@ public class User {
     @Column(unique = true)
     private String email;
 
+    private String password;
+
     private BigDecimal balance;
 
     @Enumerated(EnumType.STRING)
     private UserType userType;
+
+    public User(UserDTO user) {
+        this.firstName = user.firstName();
+        this.lastName = user.lastName();
+        this.balance = user.balance();
+        this.userType = user.userType();
+        this.password = user.password();
+        this.document = user.document();
+    }
 }
